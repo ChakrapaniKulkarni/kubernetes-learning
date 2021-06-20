@@ -1,0 +1,81 @@
+Get all pods running on local
+C:\Users\Chakrapani>kubectl get pods -A
+
+starts the minikube on local
+minikube start
+
+brings the ui on local
+minikube dashboard 
+
+--setup
+kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
+kubectl expose deployment hello-minikube --type=NodePort --port=8080
+
+kubectl get services hello-minikube
+
+minikube service hello-minikube
+
+kubectl port-forward service/hello-minikube 7080:8080
+
+--Load balancer
+kubectl create deployment balanced --image=k8s.gcr.io/echoserver:1.4  
+kubectl expose deployment balanced --type=LoadBalancer --port=8080
+--Start minikube
+minikube start
+
+minikube tunnel
+kubectl get services balanced
+
+minikube stop
+
+minikube delete --all
+
+-- PODS
+Creates a new pod with nginx docker image by pulling image from the public docker hub
+C:\Users\Chakrapani>kubectl run nginx --image=nginx
+pod/nginx created
+
+C:\Users\Chakrapani>kubectl get pods -o wide
+NAME    READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+nginx   1/1     Running   0          80s   172.17.0.5   minikube   <none>           <none>
+
+-verbose description of pods
+C:\Users\Chakrapani>kubectl describe pod/nginx
+
+--delete pods and services
+C:\Users\Chakrapani>kubectl -n default delete pod,svc --all
+
+-- create a sample definition file without running the command
+C:\Users\Chakrapani>kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yml
+
+--get replicaset info
+kubectl get replicasets
+
+--describe detailed replicaset info
+kubectl describe replicaset <replicaname>
+
+kubectl delete replicaset <replcianame>
+
+kubectl get deployments
+
+kubectl rollout status deployment/deployment-name
+
+kubectl rollout history deployment/deployment-name
+
+rollingUpdate is defaut deployment strategy
+
+kubectl set image deployment/<deployment-name> <container_name>= <image-name:tag>
+
+kubectl rollout undo deployment/deployment-name
+
+-- services
+kubectl describe deployments
+
+kubectl get services
+
+-- vi editor commands
+vi <filename> - to open the file for editing
+i- to start editing the file
+Esc - exit edit mode
+:wq + Enter - to save and exit file
+cat <filename> - to print the file contents on console.
