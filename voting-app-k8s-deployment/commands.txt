@@ -1,0 +1,59 @@
+--create new namespace
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment>kubectl create ns voting-app
+namespace/voting-app created
+
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl apply -f postgres-pod.yaml
+pod/postgres-pod created
+
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl get pods --namespace=voting-app
+
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl apply -f postgres-service.yaml --namespace=voting-app
+service/postgres-service created
+
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl get pods,services --namespace=voting-app
+NAME               READY   STATUS    RESTARTS   AGE
+pod/postgres-pod   1/1     Running   0          4m14s
+
+NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/postgres-service   ClusterIP   10.108.143.98   <none>        5432/TCP   31s
+
+--redis
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl apply -f redis-pod.yaml
+pod/redis-pod created
+
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl apply -f redis-service.yaml
+service/redis-service created
+
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl get pods,services --namespace=voting-app
+NAME               READY   STATUS    RESTARTS   AGE
+pod/postgres-pod   1/1     Running   0          17m
+pod/redis-pod      1/1     Running   0          26s
+
+NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/postgres-service   ClusterIP   10.108.143.98   <none>        5432/TCP   13m
+service/redis-service      ClusterIP   10.97.104.8     <none>        6379/TCP   2s
+
+-- worker-service
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl apply -f worker-pod.yaml
+pod/worker-pod created
+
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl describe pod worker-pod --namespace=voting-app
+
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>kubectl get pods,services --namespace=voting-app
+NAME                 READY   STATUS    RESTARTS   AGE
+pod/postgres-pod     1/1     Running   0          113s
+pod/redis-pod        1/1     Running   0          95s
+pod/voting-app-pod   1/1     Running   0          51s
+pod/worker-pod       1/1     Running   0          76s
+
+NAME                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/db               ClusterIP   10.103.125.45   <none>        5432/TCP   107s
+service/redis            ClusterIP   10.107.56.235   <none>        6379/TCP   90s
+service/voting-service   ClusterIP   10.97.156.215   <none>        80/TCP     40s
+
+D:\DEVHUB\KUBERNETES\kubernetes-learning\voting-app-k8s-deployment\with-pods>minikube service voting-service --url
+
+
+
+
+

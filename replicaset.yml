@@ -10,8 +10,8 @@ spec:
   template:
     metadata:
        name: frontend
-      labels:
-       tier: frontend
+       labels:
+        tier: frontend
     spec:
       containers:
       - name: busybox

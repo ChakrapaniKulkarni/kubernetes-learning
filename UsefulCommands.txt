@@ -72,6 +72,10 @@ kubectl rollout undo deployment/deployment-name
 kubectl describe deployments
 
 kubectl get services
+-- gives the url to access the service
+minikube service <service_name> --url 
+
+kubectl get pods,svc
 
 -- vi editor commands
 vi <filename> - to open the file for editing
