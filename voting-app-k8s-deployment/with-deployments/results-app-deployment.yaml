@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: voting-app
+  name: results-app-deployment
+  labels:
+    app: demo-voting-app
+spec:
+  selector:
+    matchLabels:
+      name: results-app-pod
+      app:  demo-voting-app
+  template:
+    metadata:
+      name: results-app-pod
+      labels:
+        name: results-app-pod
+        app:  demo-voting-app
+    spec:
+      containers:
+       -  name: results-app
+          image: dockersamples/examplevotingapp_result
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
