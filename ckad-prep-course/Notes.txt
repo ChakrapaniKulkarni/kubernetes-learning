@@ -1,0 +1,52 @@
+kubectl get nodes
+kubectl get namespace
+kubectl get pods
+kubectl cluster info
+kubectl run nginx --image nginx
+kubectl describe pod <pod_name>
+-- editing an existing pod
+kubectl get pod <pod-name> -o yaml > pod-definition.yaml
+-- edit the pod properties
+kubectl edit pod <pod-name>
+kubectl scale --replicas=6 replicaset myapp-replicaset
+kubectl get replicasets
+kubectl  replace -f replicaset-definition.yaml
+kubectl  delete replicaset myapp-replicaset<replica_name>
+-export config to yaml file
+ kubectl get replicaset -o yaml > new-replica-set.yaml
+-- print all info with additional details
+kubectl get all -o wide
+kubectl create namespace test-123 --dry-run -o json
+kubectl create namespace test-123 --dry-run -o yaml
+
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+kubectl create namespace <namespace_name>
+kubectl get namespace
+--switching to a namespace in kubectl-->dev
+kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+-- view pods in all namespaces
+kubectl get pods --all-namespaces
+-- using service from other namespace
+db-service.dev.svc.cluster.local:6379
+--imperative commands
+https://kubernetes.io/docs/reference/kubectl/conventions/
+kubectl create deployment --image=nginx nginx --dry-run -o yaml
+kubectl scale deployment nginx --replicas=4
+--save the config to yaml file
+kubectl create deployment nginx --image=nginx--dry-run=client -o yaml > nginx-deployment.yaml
+--creating service
+kubectl expose pod redis --port=6379 --name redis-service --dry-run=client -o yaml
+
+kubectl create service clusterip redis --tcp=6379:6379 --dry-run=client -o yaml > ip-service.yaml
+kubectl run nginx-pod --image=nginx:alpine
+ kubectl run redis --image=redis:alpine --dry-run=client -o yaml > redis-pod.yaml
+  kubectl expose pod redis --port=6379 --name redis-service
+  kubectl create deployment webapp --image=kodekloud/webapp-color --replicas=3  
+  kubectl create deployment --image=redis redis-deploy --replicas=2 --namespace=dev-ns --dry-run=client -o yaml
+kubectl run httpd --image=httpd:alpine --port=80 --dry-run=client -o yaml
+
+kubectl run httpd --image=httpd:alpine --port=80 --expose
+
+
